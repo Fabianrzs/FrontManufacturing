@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-md">
+    <div class="column">
+      <div class="row">
+        <div class="col-6">
+          <a class="link-primary btn" data-bs-toggle="modal" data-bs-target="#Modal">Agregar</a>
+        </div>
+        <div class="col-2">
+          <select class="form-select" name="state" [(ngModel)]="state" (ngModelChange)="this.listProducts()">
+            <option [value]="item.id" *ngFor="let item of states">{{item.name}}</option>
+          </select>
+        </div>
+      </div>
+      <br><br>
+      <div class="table-container">
+        <table class="table table-light table-hover" *ngIf='products && products.length'>
+          <thead class="text-primary">
+            <th scope="col">#</th>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Estado</th>
+            <th *ngIf="state === stock" scope="col">Acciones</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of products; index as i ">
+              <th scope="row">{{i + 1}}</th>
+              <td>{{c.id}}</td>
+              <td>{{c.name}}</td>
+              <td>{{stateString(c)}}</td>
+              <td *ngIf="c.state === stock">
+                <button class="link-danger btn" (click)="MarkFaulty(c.id)">Defectuaso</button>
+                <button class=" link-warning btn" (click)="MarkOutlet(c.id)">Salida</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="staticBackdropLabel">Agregar Productos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-form-product [products]="products"></app-form-product>
+      </div>
+    </div>
+  </div>
+</div>
